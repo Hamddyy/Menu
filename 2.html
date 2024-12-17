@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قائمة الطعام</title>
+    <style>
+        .menu-section {
+            margin-bottom: 20px;
+        }
+        .menu-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .item {
+            margin: 5px 0;
+        }
+        select {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="filters">
+        <select id="category-filter">
+            <option value="all">عرض الكل</option>
+            <option value="main_dishes">الأطباق الرئيسية</option>
+            <option value="sandwiches">السندوتشات</option>
+            <option value="appetizers">المقبلات</option>
+            <option value="beverages">المشروبات</option>
+        </select>
+
+        <select id="sort-order">
+            <option value="name">ترتيب حسب الاسم</option>
+            <option value="price">ترتيب حسب السعر</option>
+        </select>
+    </div>
+
+    <div id="menu"></div>
+
+    <script>
+        // جلب البيانات من ملف menu.json
+        fetch('menu.json')
+            .then(response => response.json())
+            .then(data => {
+                renderMenu(data);
+                setupFilters(data);  // إعداد الفلاتر
+            })
+            .catch(error => {
+                console.error('Error fetching the menu data:', error);
+            });
+
+        // دالة لعرض السلع
+        function renderMenu(menuData, category = 'all', sortBy = 'name') {
+            const menuElement = document.getElementById('menu');
+            menuElement.innerHTML = '';  // مسح المحتوى القديم
+
+            // تحديد البيانات التي سيتم عرضها بناءً على الفئة المحددة
+            let filteredMenu = [];
+            if (category === 'all') {
+                filteredMenu = [].concat(
+                    menuData.menu.main_dishes,
+                    menuData.menu.sandwiches,
+                    menuData.menu.appetizers,
+                    menuData.menu.beverages
+                );
+            } else {
+                filteredMenu = menuData.menu[category];
+            }
+
+            // ترتيب السلع بناءً على الخيار المحدد
+            if (sortBy === 'price') {
+                filteredMenu.sort((a, b) => a.price - b.price);
+            } else {
+                filteredMenu.sort((a, b) => a.name.localeCompare(b.name));
+            }
+
+            // عرض السلع
+            filteredMenu.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('item');
+                itemElement.innerHTML = `
+                    <strong>${item.name}</strong><br>
+                    ${item.description}<br>
+                    السعر: ${item.price} ج.م
+                `;
+                menuElement.appendChild(itemElement);
+            });
+        }
+
+        // إعداد الفلاتر عند تغيير الفئة أو ترتيب السلع
+        function setupFilters(menuData) {
+            const categoryFilter = document.getElementById('category-filter');
+            const sortOrder = document.getElementById('sort-order');
+
+            categoryFilter.addEventListener('change', (event) => {
+                const category = event.target.value;
+                const sortBy = sortOrder.value;
+                renderMenu(menuData, category, sortBy);
+            });
+
+            sortOrder.addEventListener('change', (event) => {
+                const sortBy = event.target.value;
+                const category = categoryFilter.value;
+                renderMenu(menuData, category, sortBy);
+            });
+        }
+    </script>
+
+</body>
+</html>
