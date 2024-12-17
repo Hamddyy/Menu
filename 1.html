@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منيو المطعم</title>
+</head>
+<body>
+    <h1>منيو المطعم</h1>
+
+    <h2>الأطعمة</h2>
+    <ul id="food-list"></ul>
+
+    <h2>المشروبات</h2>
+    <ul id="drink-list"></ul>
+
+    <script>
+        async function loadMenu() {
+            try {
+                // تحميل بيانات JSON
+                const foodResponse = await fetch('food.json');
+                const drinkResponse = await fetch('drinks.json');
+
+                if (!foodResponse.ok || !drinkResponse.ok) {
+                    throw new Error('فشل تحميل الملفات');
+                }
+
+                const foodData = await foodResponse.json();
+                const drinkData = await drinkResponse.json();
+
+                // عرض الأطعمة
+                const foodList = document.getElementById('food-list');
+                foodData.foods.forEach(food => {
+                    const li = document.createElement('li');
+                    li.textContent = `${food.name} - ${food.price} ريال`;
+                    foodList.appendChild(li);
+                });
+
+                // عرض المشروبات
+                const drinkList = document.getElementById('drink-list');
+                drinkData.drinks.forEach(drink => {
+                    const li = document.createElement('li');
+                    li.textContent = `${drink.name} - ${drink.price} ريال`;
+                    drinkList.appendChild(li);
+                });
+
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        }
+
+        loadMenu();
+    </script>
+</body>
+</html>
