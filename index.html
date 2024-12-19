@@ -329,6 +329,9 @@
             },
         };
 
+           <script>
+        let products = [];
+
         async function loadProducts() {
             try {
                 const response = await fetch('https://raw.githubusercontent.com/Hamddyy/menu/refs/heads/main/menu.json');
@@ -336,14 +339,14 @@
                     products = await response.json();
                     renderProducts();
                 } else {
-                    alert("فشل تحميل المنتجات. تأكد من وجود الملف products.json");
+                    alert("فشل تحميل المنتجات. تأكد من وجود الملف menu.json");
                 }
             } catch (error) {
                 console.error("Error loading products:", error);
             }
         }
 
-        function renderProducts(filteredProducts = products) {
+        function renderProducts(filteredProducts = products.items) {
             const productList = document.getElementById('product-list');
             productList.innerHTML = '';
             filteredProducts.forEach(product => {
@@ -362,7 +365,7 @@
 
         function searchProduct() {
             const searchValue = document.getElementById('search-box').value.toLowerCase();
-            const filteredProducts = products.filter(product =>
+            const filteredProducts = products.items.filter(product =>
                 product.name.toLowerCase().includes(searchValue)
             );
             renderProducts(filteredProducts);
@@ -370,7 +373,7 @@
 
         document.getElementById('search-box').addEventListener('input', () => {
             const searchValue = document.getElementById('search-box').value.toLowerCase();
-            const filteredProducts = products.filter(product =>
+            const filteredProducts = products.items.filter(product =>
                 product.name.toLowerCase().includes(searchValue)
             );
             renderProducts(filteredProducts);
@@ -387,11 +390,12 @@
 
         function filterProducts(category) {
             if (category === 'all') {
-                renderProducts(products);
+                renderProducts(products.items);
             } else {
-                const filteredProducts = products.filter(product => product.category === category);
+                const filteredProducts = products.items.filter(product => product.category === category);
                 renderProducts(filteredProducts);
             }
+       
         }
 
         loadProducts();
