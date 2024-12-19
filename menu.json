@@ -4605,7 +4605,7 @@
             "name": "Shisha Fire",
             "price": 0,
             "description": "This is a delicious Shisha Fire.",
-            "category": "bev",
+            "category": "misc",
             "image": "https://raw.githubusercontent.com/Hamddyy/Res/refs/heads/main/images/soho2.jpg"
         },
         {
@@ -6341,7 +6341,7 @@
             "name": "Special Shisha",
             "price": 310,
             "description": "This is a delicious Special Shisha.",
-            "category": "bev",
+            "category": "misc",
             "image": "https://raw.githubusercontent.com/Hamddyy/Res/refs/heads/main/images/soho2.jpg"
         },
         {
@@ -6357,7 +6357,7 @@
             "name": "Shisha lay one w",
             "price": 20,
             "description": "This is a delicious Shisha lay one w.",
-            "category": "bev",
+            "category": "misc",
             "image": "https://raw.githubusercontent.com/Hamddyy/Res/refs/heads/main/images/soho1.jpg"
         },
         {
@@ -6405,7 +6405,7 @@
             "name": "Shisha V.I.P",
             "price": 600,
             "description": "This is a delicious Shisha V.I.P.",
-            "category": "bev",
+            "category": "misc",
             "image": "https://raw.githubusercontent.com/Hamddyy/Res/refs/heads/main/images/soho2.jpg"
         },
         {
