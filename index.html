@@ -304,14 +304,15 @@
     
  <!-- أزرار الفئات -->
     <div class="category-buttons">
-        <button onclick="filterProducts('all')">كل المنتجات</button>
-        <button onclick="filterProducts('main')">أطباق رئيسية</button>
-        <button onclick="filterProducts('sandwiches')">سندوتشات</button>
-        <button onclick="filterProducts('appetizers')">مقبلات</button>
-        <button onclick="filterProducts('hot-drinks')">مشروبات ساخنة</button>
-        <button onclick="filterProducts('cold-drinks')">مشروبات باردة</button>
+        <button onclick="filterProducts('all')">all</button>
+        <button onclick="filterProducts('food')">food</button>
+        <button onclick="filterProducts('bev')">bev</button>
+        <button onclick="filterProducts('other')">other</button>
+        <button onclick="filterProducts('misc')">misc</button>
+        
+        
     </div>
-
+  
     <div class="product-list" id="product-list"></div>
 
     <script>
@@ -328,9 +329,6 @@
                 buttonText: "Search",
             },
         };
-
-           <script>
-        let products = [];
 
         async function loadProducts() {
             try {
@@ -395,7 +393,6 @@
                 const filteredProducts = products.items.filter(product => product.category === category);
                 renderProducts(filteredProducts);
             }
-       
         }
 
         loadProducts();
