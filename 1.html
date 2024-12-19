@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Items</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+        .item img {
+            max-width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Menu Items</h1>
+    <div id="items-container"></div>
+
+    <script>
+        // URL of the JSON file
+        const url = "https://raw.githubusercontent.com/Hamddyy/menu/refs/heads/main/menu.json";
+
+        // Function to fetch and display items
+        async function fetchAndDisplayItems() {
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const itemsContainer = document.getElementById('items-container');
+
+                data.items.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'item';
+
+                    const itemImage = document.createElement('img');
+                    itemImage.src = item.image;
+                    itemDiv.appendChild(itemImage);
+
+                    const itemName = document.createElement('h2');
+                    itemName.textContent = item.name;
+                    itemDiv.appendChild(itemName);
+
+                    const itemPrice = document.createElement('p');
+                    itemPrice.textContent = `Price: ${item.price}`;
+                    itemDiv.appendChild(itemPrice);
+
+                    const itemDescription = document.createElement('p');
+                    itemDescription.textContent = `Description: ${item.description}`;
+                    itemDiv.appendChild(itemDescription);
+
+                    const itemCategory = document.createElement('p');
+                    itemCategory.textContent = `Category: ${item.category}`;
+                    itemDiv.appendChild(itemCategory);
+
+                    itemsContainer.appendChild(itemDiv);
+                });
+            } catch (error) {
+                console.error('Error fetching and displaying items:', error);
+            }
+        }
+
+        // Fetch and display items on page load
+        window.onload = fetchAndDisplayItems;
+    </script>
+</body>
+</html>
